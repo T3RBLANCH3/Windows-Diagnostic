@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevForge.io Diagnostic Report</title>
+<style>
+  @page { margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    /* Scales the whole layout with screen width. Locked to a sane
+       range so print/desktop (wkhtmltopdf, Chrome headless) stays
+       normal, and phones get a real bump instead of shrinking. */
+    font-size: clamp(16px, 4.2vw, 20px);
+  }
+
+  body {
+    font-family: 'Courier New', Consolas, monospace;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    padding: 0;
+  }
+
+  .sheet {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #121212;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: #161616;
+    border-bottom: 0.2rem solid #e0a800;
+    padding: 1.6rem 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 3.4rem;
+    height: 3.4rem;
+    border: 0.14rem solid #e0a800;
+    border-radius: 0.7rem;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e0a800;
+    flex-shrink: 0;
+  }
+
+  .brand-text .name {
+    font-size: 1.5rem;
+    letter-spacing: 0.05rem;
+    font-weight: bold;
+    color: #f5f5f5;
+  }
+  .brand-text .name .dev { color: #f5f5f5; }
+  .brand-text .name .forge { color: #e0a800; }
+  .brand-text .tagline {
+    font-size: 0.68rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    margin-top: 0.15rem;
+  }
+
+  .header-meta {
+    text-align: right;
+    color: #a0a0a0;
+    font-size: 0.72rem;
+    line-height: 1.7;
+  }
+  .header-meta .title {
+    color: #e0a800;
+    font-size: 0.8rem;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ===== BODY ===== */
+  .content {
+    padding: 1.6rem 1.4rem 1.8rem 1.4rem;
+  }
+
+  .section {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #e0a800;
+    font-size: 0.85rem;
+    letter-spacing: 0.14rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .section-title::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #e0a800;
+    display: inline-block;
+    border-radius: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .log-box {
+    background: #000;
+    border: 1px solid #2a2a2a;
+    border-left: 0.2rem solid #c0c0c0;
+    border-radius: 0.3rem;
+    padding: 1rem 1.1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: #cfcfcf;
+    overflow-x: auto;
+  }
+
+  .log-box.hardware { border-left-color: #e0a800; }
+  .log-box.software { border-left-color: #c0c0c0; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    border-top: 1px solid #2a2a2a;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    color: #8a8a8a;
+    letter-spacing: 0.05rem;
+  }
+
+  .footer .gold { color: #e0a800; }
+  .footer .white { color: #d9d9d9; }
+  .footer .contact-info { text-align: right; }
+
+  /* On real narrow phones, drop the right-alignment so nothing
+     gets squeezed into a thin column. */
+  @media (max-width: 480px) {
+    .header-meta { text-align: left; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .footer .contact-info { text-align: left; }
+  }
+
+  /* Keep it compact and desktop-normal when actually printed to PDF */
+  @media print {
+    html { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+
+    <div class="header">
+      <div class="brand">
+        <div class="brand-mark">&gt;_</div>
+        <div class="brand-text">
+          <div class="name"><span class="dev">Dev</span><span class="forge">Forge</span>.io</div>
+          <div class="tagline">Diagnostics Engine</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="title">System Report</div>
+        <div>Generated: {{DATE}}</div>
+        <div>Cell: +27 50 035 9609</div>
+        <div>Email: devforge.os1@gmail.com</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="section">
+        <div class="section-title">Hardware Diagnostics</div>
+        <div class="log-box hardware">{{HARDWARE_LOG}}</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Software &amp; Solutions</div>
+        <div class="log-box software">{{SOFTWARE_LOG}}</div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div><span class="white">Dev</span><span class="gold">Forge</span><span class="white">.io</span> &mdash; Automated Diagnostic Engine</div>
+      <div class="contact-info">+27 50 035 9609 | devforge.os1@gmail.com</div>
+    </div>
+
+  </div>
+</body>
+</html>
