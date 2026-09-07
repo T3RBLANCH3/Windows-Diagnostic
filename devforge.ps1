@@ -110,7 +110,12 @@ if ($HasInternet) {
     Write-Host "[+] Active Internet Connection Detected."
     Write-Host "[*] Uploading PDF to temporary file host..."
     try {
-        $UploadResult = Invoke-RestMethod -Uri "https://transfer.sh/DevForge_Diagnostic_Report.pdf" -Method Put -InFile $OutputPdf
+        # Using 0x0.st / catbox via multipart form upload (bypasses transfer.sh blocks)
+        $Form = @{
+            file = Get-Item -Path $OutputPdf
+        }
+        $UploadResult = Invoke-RestMethod -Uri "https://0x0.st" -Method Post -Form $Form -UserAgent "Mozilla/5.0"
+        
         Write-Host "`n=========================================================="
         Write-Host "   ONLINE DELIVERY: SCAN OR USE LINK TO DOWNLOAD PDF      "
         Write-Host "=========================================================="
@@ -137,7 +142,6 @@ if ($LocalIP) {
 
     Write-Host "[*] Hosting local file server on port $ServerPort. Press Ctrl+C to terminate."
     
-    # Simple HTTP Server in PowerShell
     $Listener = New-Object System.Net.HttpListener
     $Listener.Prefixes.Add("http://*:${ServerPort}/")
     $Listener.Start()
